@@ -6,7 +6,7 @@
  set airbyte_schema = 'AIRBYTE_SCHEMA';
 
  -- set user password
- set airbyte_password = 'password';
+ set airbyte_password = 'your_password';
 AIRBYTE_DATABASE.AIRBYTE_SCHEMA
  begin;
 
