@@ -14,23 +14,16 @@ services:
     ports:
       - "5432:5432"
 
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-      args:
-        # Run `make .env` to set $USER_ID and $GROUP_ID
-        USER_ID: ${USER_ID:-}
-        GROUP_ID: ${GROUP_ID:-}
-    command: "/root/.virtualenvs/dbt/bin/pytest"
-    environment:
-      POSTGRES_TEST_HOST: "database"
-    volumes:
-      - .:/usr/app
-    working_dir: /usr/app
-    depends_on:
-      - database
-
-networks:
-  default:
-    name: dbt-net
+  postgres-dbt:
+      image: postgres
+      environment:
+        POSTGRES_PASSWORD: pssd
+        POSTGRES_USER : dbtuser
+        POSTGRES_DB : dbtdb
+        DBT_SCHEMA: dbt
+        DBT_RAW_DATA_SCHEMA: dbt_raw_data
+      expose:
+        - 5432
+      restart: always
+      volumes:
+        - ./sample_data:/sample_data
